@@ -35,11 +35,7 @@ public:
 	SSL_CTX *ctx;       //SSL上下文
 	int m_listenSocket;
 
-	char * initialize_ctx();			//初始化CTX
-	void load_dh_params(SSL_CTX *ctx, char *file);		//加载CTX参数
-	//int TcpListen(); 	//TCP监听函数
-	void StopHttpSrv();		//停止HTTP服务
-	bool StartHttpSrv();		//开始HTTP服务
+	void load_dh_params(SSL_CTX *ctx, char *file);		//加载DH参数
 	static void * ListenThread(LPVOID param);		//监听线程
 	static void * ClientThread(LPVOID param);		//客户线程	
 	
@@ -49,5 +45,4 @@ public:
 	int Analyze(PREQUEST pReq, LPBYTE pBuf);		//分析HTTP请求
 	bool SSLSendHeader(PREQUEST pReq, BIO *io);		//发送HTTPS头
 	bool SSLSendFile(PREQUEST pReq, BIO *io);	   	    //由SSL通道发送文件
-	bool SSLSendBuffer(PREQUEST pReq, LPBYTE pBuf, DWORD dwBufSize);
 };

@@ -98,6 +98,9 @@ CHttpProtocol::CHttpProtocol(){
     SSL_CTX_set_default_passwd_cb(ctx, password_cb);	// 设置密码回调函数
 
     SSL_CTX_load_verify_locations(ctx, "./my_service/demoCA/newcerts/ca.pem", 0);		// 加载受信任的CA证书
+	SSL_CTX_set_verify(ctx, SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT, NULL);
+	SSL_CTX_set_verify_depth(ctx, 1);
+
 
     /*当使用RSA算法鉴别的时候，会有一个临时的DH密钥磋商发生。这样会话数据将用
     这个临时的密钥加密，而证书中的密钥作为签名*/
@@ -126,7 +129,7 @@ CHttpProtocol::CHttpProtocol(){
         perror("bind");
         exit(1);
     }
-	printf("1\n");
+	//printf("1\n");
 	pthread_t listen_tid;
 	pthread_create(&listen_tid,NULL,&ListenThread,this);
 }
